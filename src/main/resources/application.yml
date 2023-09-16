@@ -1,0 +1,21 @@
+server:
+  port: 9090
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+
+
+
+keycloak:
+  realm: javatechie
+  auth-server-url: http://localhost:8890
+  resource: springboot-keycloak
+  public-client: true
+  bearer-only: true
