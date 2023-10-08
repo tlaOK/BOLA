@@ -36,21 +36,7 @@ public class UserRessource {
     @GetMapping("")
     @RolesAllowed({"user", "admin"})
     public ResponseEntity<List<User>> allUser(){
-        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
-
-        if(simpleKeycloakAccount.getRoles().contains("admin")) {
-            return new ResponseEntity<>(this.userService.getAll(),HttpStatus.OK);
-        } else if(simpleKeycloakAccount.getRoles().contains("user")) {
-
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
-            Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
-
-            return new ResponseEntity<>(this.userService.findAllUserByUsername(currentUsername), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ArrayList<>(),HttpStatus.OK);
-        }
-
+        return new ResponseEntity<>(this.userService.getAll(),HttpStatus.OK);
 
     }
 
@@ -58,11 +44,6 @@ public class UserRessource {
     @GetMapping("/{id}")
     @RolesAllowed("user")
     public ResponseEntity<User> findUserById(@PathVariable("id")long id) {
-
-        //Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        //KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
-        //Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
-
         User foundUser = this.userService.findById(id);
         return new ResponseEntity<>(foundUser, HttpStatus.OK);
     }

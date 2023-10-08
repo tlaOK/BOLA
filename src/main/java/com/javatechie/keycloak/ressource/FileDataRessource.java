@@ -32,38 +32,13 @@ public class FileDataRessource {
     @GetMapping("")
     @RolesAllowed({"admin", "user"})
     public ResponseEntity<List<File>> getAllExampleData() {
-        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if(simpleKeycloakAccount.getRoles().contains("admin")) {
-            return new ResponseEntity<>(fileDataService.getAll(), HttpStatus.OK);
-        } else if(simpleKeycloakAccount.getRoles().contains("user")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
-            Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
-
-            return new ResponseEntity<>(fileDataService.findExampleDataByCreatorName(currentUsername), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
-        }
-
+        return new ResponseEntity<>(fileDataService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @RolesAllowed({"admin", "user"})
     public ResponseEntity<File> getExampleDataById(@PathVariable("id")long id) {
-        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
-        if(simpleKeycloakAccount.getRoles().contains("admin")) {
-            return new ResponseEntity<>(fileDataService.findById(id), HttpStatus.OK);
-        } else if(simpleKeycloakAccount.getRoles().contains("user")) {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
-            Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
-            File currentFile = fileDataService.findById(id);
-            return (currentFile.getCreator().getUsername().getValue().equals(currentUsername.getValue()))
-                    ? new ResponseEntity<>(currentFile, HttpStatus.OK)
-                    : new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-        } else {
-            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
-        }
+        return new ResponseEntity<>(fileDataService.findById(id),HttpStatus.OK);
 
     }
     @DeleteMapping("/{id}")
@@ -77,22 +52,8 @@ public class FileDataRessource {
     @RolesAllowed({"admin", "user"})
     public ResponseEntity<File> updateExampleData(@PathVariable("id")long id, @RequestParam("content") String newContent) {
 
-        System.out.println("Hallo");
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
-        Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
-
         File foundFile = fileDataService.findById(id);
-
-        if(foundFile.getCreator().getUsername().getValue().equals(currentUsername.getValue())) {
-            foundFile.setContent(new Content(newContent));
-            foundFile = fileDataService.add(foundFile);
-            return new ResponseEntity<>(foundFile,HttpStatus.ACCEPTED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-
+        return new ResponseEntity<>(foundFile,HttpStatus.OK);
     }
 
 
