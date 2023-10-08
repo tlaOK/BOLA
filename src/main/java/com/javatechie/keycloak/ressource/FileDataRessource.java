@@ -41,7 +41,8 @@ public class FileDataRessource {
             Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
 
             return new ResponseEntity<>(fileDataService.findExampleDataByCreatorName(currentUsername), HttpStatus.OK);
-        } else {
+        }
+        else {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
         }
 

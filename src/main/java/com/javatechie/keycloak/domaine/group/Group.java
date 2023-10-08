@@ -1,11 +1,9 @@
 package com.javatechie.keycloak.domaine.group;
 
 import com.javatechie.keycloak.domaine.user.User;
+import com.javatechie.keycloak.domaine.user.Username;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,7 @@ public class Group {
     @Id
     private long id;
 
-    @OneToMany
+    @ManyToMany
     private List<User> participants = new ArrayList<>();
 
     protected Group() {
@@ -33,4 +31,19 @@ public class Group {
         }
 
     }
+
+    public boolean containsUser(User user) {
+        return this.participants.contains(user);
+    }
+
+    public boolean containsUser(Username username) {
+        boolean valid = false;
+
+        for(int i = 0; i < participants.size() && !valid; i++) {
+            valid = participants.get(i).getUsername().getValue().equals(username.getValue());
+        }
+
+        return valid;
+    }
 }
+

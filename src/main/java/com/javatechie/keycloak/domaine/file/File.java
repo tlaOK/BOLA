@@ -1,10 +1,12 @@
 package com.javatechie.keycloak.domaine.file;
 
 
+import com.javatechie.keycloak.domaine.group.Group;
 import com.javatechie.keycloak.domaine.user.User;
 import com.javatechie.keycloak.infrastructure.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -22,6 +24,9 @@ public class File extends AbstractEntity<Long> {
 
     @ManyToOne
     private User creator;
+
+    @ManyToMany
+    private List<Group> group;
 
     protected File() {
         //JPA
