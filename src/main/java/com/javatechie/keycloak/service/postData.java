@@ -1,7 +1,7 @@
 package com.javatechie.keycloak.service;
 
-import com.javatechie.keycloak.domaine.exampledata.Content;
-import com.javatechie.keycloak.domaine.exampledata.ExampleData;
+import com.javatechie.keycloak.domaine.file.Content;
+import com.javatechie.keycloak.domaine.file.File;
 import com.javatechie.keycloak.domaine.user.Password;
 import com.javatechie.keycloak.domaine.user.User;
 import com.javatechie.keycloak.domaine.user.Username;
@@ -14,25 +14,25 @@ import javax.annotation.PostConstruct;
 public class postData {
 
     @Autowired
-    private final ExampleDataService exampleDataService;
+    private final FileDataService fileDataService;
 
     @Autowired
     private final UserService userService;
 
-    public postData(ExampleDataService exampleDataService, UserService userService) {
-        this.exampleDataService = exampleDataService;
+    public postData(FileDataService fileDataService, UserService userService) {
+        this.fileDataService = fileDataService;
         this.userService = userService;
     }
 
     @PostConstruct
     public void init() {
-        ExampleData exampleData1 = new ExampleData(new Content("Dieser Inhalt sollte nur von dem Ersteller zu sehen sein"));
+        File file1 = new File(new Content("Dieser Inhalt sollte nur von dem Ersteller zu sehen sein"));
         User tla = new User(new Username("tla"), new Password("Password"));
-        exampleData1.setCreator(tla);
+        file1.setCreator(tla);
         User arne = new User(new Username("arne"), new Password("password"));
 
         userService.add(tla);
         userService.add(arne);
-        exampleDataService.add(exampleData1);
+        fileDataService.add(file1);
     }
 }

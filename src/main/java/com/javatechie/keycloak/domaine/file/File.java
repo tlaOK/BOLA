@@ -1,4 +1,4 @@
-package com.javatechie.keycloak.domaine.exampledata;
+package com.javatechie.keycloak.domaine.file;
 
 
 import com.javatechie.keycloak.domaine.user.User;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TAB_EXAMPLEDATA")
-public class ExampleData extends AbstractEntity<Long> {
+public class File extends AbstractEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,11 +23,11 @@ public class ExampleData extends AbstractEntity<Long> {
     @ManyToOne
     private User creator;
 
-    protected ExampleData() {
+    protected File() {
         //JPA
     }
 
-    public ExampleData(Content content) {
+    public File(Content content) {
         this.content = content;
     }
 

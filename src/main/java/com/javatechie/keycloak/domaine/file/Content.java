@@ -1,4 +1,4 @@
-package com.javatechie.keycloak.domaine.exampledata;
+package com.javatechie.keycloak.domaine.file;
 
 
 import com.javatechie.keycloak.infrastructure.AbstractSimpleValueObject;

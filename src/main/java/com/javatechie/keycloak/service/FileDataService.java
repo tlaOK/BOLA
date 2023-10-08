@@ -1,32 +1,31 @@
 package com.javatechie.keycloak.service;
 
-import com.javatechie.keycloak.domaine.exampledata.ExampleData;
-import com.javatechie.keycloak.domaine.user.User;
+import com.javatechie.keycloak.domaine.file.File;
 import com.javatechie.keycloak.domaine.user.Username;
-import com.javatechie.keycloak.repository.ExampleDataRepository;
+import com.javatechie.keycloak.repository.FileDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class ExampleDataService {
+public class FileDataService {
 
     @Autowired
-    private final ExampleDataRepository repository;
+    private final FileDataRepository repository;
 
-    public ExampleDataService(ExampleDataRepository repository) {
+    public FileDataService(FileDataRepository repository) {
         this.repository = repository;
     }
 
-    public ExampleData add(ExampleData exampleData) {
-        return this.repository.save(exampleData);
+    public File add(File file) {
+        return this.repository.save(file);
     }
 
-    public List<ExampleData> getAll() {
+    public List<File> getAll() {
         return repository.findAll();
     }
 
-    public ExampleData findById(long id) {
+    public File findById(long id) {
         return repository.findById(id).orElseThrow(()->new NoSuchElementException("No such User with the id: "+ id));
     }
 
@@ -35,7 +34,7 @@ public class ExampleDataService {
     }
 
 
-    public List<ExampleData> findExampleDataByCreatorName(Username username) {
+    public List<File> findExampleDataByCreatorName(Username username) {
         return this.repository.findAllByCreator(username);
     }
 }
