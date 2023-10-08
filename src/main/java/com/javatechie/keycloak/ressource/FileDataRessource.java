@@ -18,7 +18,7 @@ import javax.annotation.security.RolesAllowed;
 import java.util.*;
 
 @RestController
-@RequestMapping("/exampledatas")
+@RequestMapping("/files")
 @CrossOrigin
 public class FileDataRessource {
 
@@ -46,21 +46,46 @@ public class FileDataRessource {
         }
 
     }
+
+    @GetMapping("/{id}")
+    @RolesAllowed({"admin", "user"})
+    public ResponseEntity<File> getExampleDataById(@PathVariable("id")long id) {
+        SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
+        if(simpleKeycloakAccount.getRoles().contains("admin")) {
+            return new ResponseEntity<>(fileDataService.findById(id), HttpStatus.OK);
+        } else if(simpleKeycloakAccount.getRoles().contains("user")) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
+            Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
+            File currentFile = fileDataService.findById(id);
+            return (currentFile.getCreator().getUsername().getValue().equals(currentUsername.getValue()))
+                    ? new ResponseEntity<>(currentFile, HttpStatus.OK)
+                    : new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+    }
     @DeleteMapping("/{id}")
+    @RolesAllowed({"admin", "user"})
     public ResponseEntity<?> deleteExampleData(@PathVariable("id")long id) {
         fileDataService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<File> updateExampleData(@PathVariable("id")long id, String newContent) {
+    @RolesAllowed({"admin", "user"})
+    public ResponseEntity<File> updateExampleData(@PathVariable("id")long id, @RequestParam("content") String newContent) {
+
+        System.out.println("Hallo");
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
         Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
 
         File foundFile = fileDataService.findById(id);
 
-        if(foundFile.getCreator().getUsername().getValue() == currentUsername.getValue()) {
+        if(foundFile.getCreator().getUsername().getValue().equals(currentUsername.getValue())) {
             foundFile.setContent(new Content(newContent));
             foundFile = fileDataService.add(foundFile);
             return new ResponseEntity<>(foundFile,HttpStatus.ACCEPTED);

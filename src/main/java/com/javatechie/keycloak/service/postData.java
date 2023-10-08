@@ -26,13 +26,16 @@ public class postData {
 
     @PostConstruct
     public void init() {
-        File file1 = new File(new Content("Dieser Inhalt sollte nur von dem Ersteller zu sehen sein"));
+        File file1 = new File(new Content("Dieser Inhalt sollte nur von tla zu sehen sein"));
+        File file2 = new File(new Content("Dieser Inhalt sollte nur von arne zu sehen sein"));
         User tla = new User(new Username("tla"), new Password("Password"));
         file1.setCreator(tla);
-        User arne = new User(new Username("arne"), new Password("password"));
 
+        User arne = new User(new Username("arne"), new Password("password"));
+        file2.setCreator(arne);
         userService.add(tla);
         userService.add(arne);
         fileDataService.add(file1);
+        fileDataService.add(file2);
     }
 }

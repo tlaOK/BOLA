@@ -26,7 +26,7 @@ public class FileDataService {
     }
 
     public File findById(long id) {
-        return repository.findById(id).orElseThrow(()->new NoSuchElementException("No such User with the id: "+ id));
+        return repository.findById(id).orElseThrow(()->new NoSuchElementException("No such File with the id: "+ id));
     }
 
     public void deleteById(long id) {
