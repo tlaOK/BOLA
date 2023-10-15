@@ -5,6 +5,7 @@ import com.javatechie.keycloak.domaine.file.Content;
 import com.javatechie.keycloak.domaine.file.File;
 import com.javatechie.keycloak.domaine.user.Username;
 import com.javatechie.keycloak.service.FileDataService;
+import com.javatechie.keycloak.service.GroupService;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,17 @@ public class FileDataRessource {
     @Autowired
     private final FileDataService fileDataService;
 
-    public FileDataRessource(FileDataService fileDataService) {
+    @Autowired
+    private final GroupService groupService;
+
+    public FileDataRessource(FileDataService fileDataService, GroupService groupService) {
        this.fileDataService = fileDataService;
+       this.groupService = groupService;
     }
 
     @GetMapping("")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<List<File>> getAllExampleData() {
+    public ResponseEntity<List<File>> getAllFile() {
         SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
         if(simpleKeycloakAccount.getRoles().contains("admin")) {
             return new ResponseEntity<>(fileDataService.getAll(), HttpStatus.OK);
@@ -40,7 +45,7 @@ public class FileDataRessource {
             KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
             Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
 
-            return new ResponseEntity<>(fileDataService.findExampleDataByCreatorName(currentUsername), HttpStatus.OK);
+            return new ResponseEntity<>(fileDataService.findFileByCreatorName(currentUsername), HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
@@ -50,7 +55,7 @@ public class FileDataRessource {
 
     @GetMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<File> getExampleDataById(@PathVariable("id")long id) {
+    public ResponseEntity<File> getFileById(@PathVariable("id")long id) {
         SimpleKeycloakAccount simpleKeycloakAccount = (SimpleKeycloakAccount) SecurityContextHolder.getContext().getAuthentication().getDetails();
         if(simpleKeycloakAccount.getRoles().contains("admin")) {
             return new ResponseEntity<>(fileDataService.findById(id), HttpStatus.OK);
@@ -59,7 +64,9 @@ public class FileDataRessource {
             KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
             Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
             File currentFile = fileDataService.findById(id);
-            return (currentFile.getCreator().getUsername().getValue().equals(currentUsername.getValue()))
+
+            return (currentFile.getCreator().getUsername().getValue().equals(currentUsername.getValue()) ||
+                    currentFile.groupsContainsUser(currentUsername))
                     ? new ResponseEntity<>(currentFile, HttpStatus.OK)
                     : new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         } else {
@@ -69,14 +76,14 @@ public class FileDataRessource {
     }
     @DeleteMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<?> deleteExampleData(@PathVariable("id")long id) {
+    public ResponseEntity<?> deleteFile(@PathVariable("id")long id) {
         fileDataService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<File> updateExampleData(@PathVariable("id")long id, @RequestParam("content") String newContent) {
+    public ResponseEntity<File> updateFile(@PathVariable("id")long id, @RequestParam("content") String newContent) {
 
         System.out.println("Hallo");
 

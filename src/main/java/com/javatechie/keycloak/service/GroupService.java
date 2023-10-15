@@ -23,6 +23,10 @@ public class GroupService {
         return repository.findById(id).orElseThrow(()->new NoSuchElementException("No such Group with the id: "+ id));
     }
 
+    public Group addGroup(Group group) {
+        return this.repository.save(group);
+    }
+
     public Group addUser(long id, User user) {
         Group foundGroup = findGroupById(id);
         if(!foundGroup.containsUser(user)) {
@@ -42,4 +46,5 @@ public class GroupService {
         Group foundGroup = findGroupById(id);
         return foundGroup.containsUser(username);
     }
+
 }

@@ -17,7 +17,7 @@ public class Group {
     @ManyToMany
     private List<User> participants = new ArrayList<>();
 
-    protected Group() {
+    public Group() {
         //JPA
     }
 
@@ -45,5 +45,6 @@ public class Group {
 
         return valid;
     }
+
 }
 
