@@ -31,26 +31,26 @@ public class FileDataRessource {
 
     @GetMapping("")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<List<File>> getAllExampleData() {
+    public ResponseEntity<List<File>> getAllFiles() {
         return new ResponseEntity<>(fileDataService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<File> getExampleDataById(@PathVariable("id")long id) {
+    public ResponseEntity<File> getFileById(@PathVariable("id")long id) {
         return new ResponseEntity<>(fileDataService.findById(id),HttpStatus.OK);
 
     }
     @DeleteMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<?> deleteExampleData(@PathVariable("id")long id) {
+    public ResponseEntity<?> deleteFile(@PathVariable("id")long id) {
         fileDataService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
     @RolesAllowed({"admin", "user"})
-    public ResponseEntity<File> updateExampleData(@PathVariable("id")long id, @RequestParam("content") String newContent) {
+    public ResponseEntity<File> updateFile(@PathVariable("id")long id, @RequestParam("content") String newContent) {
 
         File foundFile = fileDataService.findById(id);
         return new ResponseEntity<>(foundFile,HttpStatus.OK);
