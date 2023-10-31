@@ -1,7 +1,7 @@
-package com.javatechie.keycloak.domaine.file;
+package com.javatechie.keycloak.domain.file;
 
 
-import com.javatechie.keycloak.domaine.user.User;
+import com.javatechie.keycloak.domain.user.User;
 import com.javatechie.keycloak.infrastructure.AbstractEntity;
 
 import javax.persistence.*;
