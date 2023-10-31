@@ -1,7 +1,7 @@
-package com.javatechie.keycloak.domaine.group;
+package com.javatechie.keycloak.domain.group;
 
-import com.javatechie.keycloak.domaine.user.User;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.user.User;
+import com.javatechie.keycloak.domain.user.Username;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.javatechie.keycloak.domaine.user;
+package com.javatechie.keycloak.domain.user;
 
 
 import com.javatechie.keycloak.infrastructure.AbstractSimpleValueObject;

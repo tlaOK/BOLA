@@ -1,6 +1,6 @@
 package com.javatechie.keycloak.repository;
 
-import com.javatechie.keycloak.domaine.group.Group;
+import com.javatechie.keycloak.domain.group.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
