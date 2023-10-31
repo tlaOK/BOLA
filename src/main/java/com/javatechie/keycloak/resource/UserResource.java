@@ -1,4 +1,4 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
 import com.javatechie.keycloak.domain.user.Password;
@@ -19,14 +19,14 @@ import java.util.*;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
-public class UserRessource {
+public class UserResource {
 
 
 
     @Autowired
     private final UserService userService;
 
-    public UserRessource(UserService userService) {
+    public UserResource(UserService userService) {
         this.userService = userService;
     }
 

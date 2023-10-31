@@ -1,4 +1,4 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
 import com.javatechie.keycloak.domain.file.Content;
@@ -20,12 +20,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/files")
 @CrossOrigin
-public class FileDataRessource {
+public class FileDataResource {
 
     @Autowired
     private final FileDataService fileDataService;
 
-    public FileDataRessource(FileDataService fileDataService) {
+    public FileDataResource(FileDataService fileDataService) {
        this.fileDataService = fileDataService;
     }
 
