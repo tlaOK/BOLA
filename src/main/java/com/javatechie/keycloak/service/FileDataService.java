@@ -34,7 +34,7 @@ public class FileDataService {
     }
 
 
-    public List<File> findExampleDataByCreatorName(Username username) {
+    public List<File> findFileByCreatorName(Username username) {
         return this.repository.findAllByCreator(username);
     }
 }
