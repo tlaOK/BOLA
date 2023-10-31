@@ -1,9 +1,9 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
-import com.javatechie.keycloak.domaine.file.Content;
-import com.javatechie.keycloak.domaine.file.File;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.file.Content;
+import com.javatechie.keycloak.domain.file.File;
+import com.javatechie.keycloak.domain.user.Username;
 import com.javatechie.keycloak.service.FileDataService;
 import org.keycloak.KeycloakPrincipal;
 import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
@@ -20,12 +20,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/exampledatas")
 @CrossOrigin
-public class FileDataRessource {
+public class FileDataResource {
 
     @Autowired
     private final FileDataService fileDataService;
 
-    public FileDataRessource(FileDataService fileDataService) {
+    public FileDataResource(FileDataService fileDataService) {
        this.fileDataService = fileDataService;
     }
 

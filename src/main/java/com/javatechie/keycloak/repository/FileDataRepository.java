@@ -1,7 +1,7 @@
 package com.javatechie.keycloak.repository;
 
-import com.javatechie.keycloak.domaine.file.File;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.file.File;
+import com.javatechie.keycloak.domain.user.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

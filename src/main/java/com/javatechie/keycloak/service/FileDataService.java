@@ -1,7 +1,7 @@
 package com.javatechie.keycloak.service;
 
-import com.javatechie.keycloak.domaine.file.File;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.file.File;
+import com.javatechie.keycloak.domain.user.Username;
 import com.javatechie.keycloak.repository.FileDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

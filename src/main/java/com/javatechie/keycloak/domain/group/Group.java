@@ -1,6 +1,6 @@
-package com.javatechie.keycloak.domaine.group;
+package com.javatechie.keycloak.domain.group;
 
-import com.javatechie.keycloak.domaine.user.User;
+import com.javatechie.keycloak.domain.user.User;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
