@@ -1,9 +1,9 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
-import com.javatechie.keycloak.domaine.file.Content;
-import com.javatechie.keycloak.domaine.file.File;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.file.Content;
+import com.javatechie.keycloak.domain.file.File;
+import com.javatechie.keycloak.domain.user.Username;
 import com.javatechie.keycloak.service.FileDataService;
 import com.javatechie.keycloak.service.GroupService;
 import org.keycloak.KeycloakPrincipal;
@@ -21,7 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("/files")
 @CrossOrigin
-public class FileDataRessource {
+public class FileDataResource {
 
     @Autowired
     private final FileDataService fileDataService;
@@ -29,7 +29,7 @@ public class FileDataRessource {
     @Autowired
     private final GroupService groupService;
 
-    public FileDataRessource(FileDataService fileDataService, GroupService groupService) {
+    public FileDataResource(FileDataService fileDataService, GroupService groupService) {
        this.fileDataService = fileDataService;
        this.groupService = groupService;
     }
