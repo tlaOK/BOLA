@@ -1,17 +1,11 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
-import com.javatechie.keycloak.domaine.file.Content;
-import com.javatechie.keycloak.domaine.file.File;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.file.File;
 import com.javatechie.keycloak.service.FileDataService;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.security.RolesAllowed;
@@ -20,12 +14,12 @@ import java.util.*;
 @RestController
 @RequestMapping("/files")
 @CrossOrigin
-public class FileDataRessource {
+public class FileDataResource {
 
     @Autowired
     private final FileDataService fileDataService;
 
-    public FileDataRessource(FileDataService fileDataService) {
+    public FileDataResource(FileDataService fileDataService) {
        this.fileDataService = fileDataService;
     }
 

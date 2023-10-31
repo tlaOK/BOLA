@@ -1,34 +1,27 @@
-package com.javatechie.keycloak.ressource;
+package com.javatechie.keycloak.resource;
 
 
-import com.javatechie.keycloak.domaine.user.Password;
-import com.javatechie.keycloak.domaine.user.User;
-import com.javatechie.keycloak.domaine.user.Username;
+import com.javatechie.keycloak.domain.user.Password;
+import com.javatechie.keycloak.domain.user.User;
 import com.javatechie.keycloak.service.UserService;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.adapters.springsecurity.account.SimpleKeycloakAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.CurrentSecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.security.RolesAllowed;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RestController
 @RequestMapping("/users")
 @CrossOrigin
-public class UserRessource {
+public class UserResource {
 
 
 
     @Autowired
     private final UserService userService;
 
-    public UserRessource(UserService userService) {
+    public UserResource(UserService userService) {
         this.userService = userService;
     }
 
