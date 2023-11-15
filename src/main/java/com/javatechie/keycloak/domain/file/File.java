@@ -1,10 +1,14 @@
 package com.javatechie.keycloak.domain.file;
 
 
+import com.javatechie.keycloak.domain.group.Group;
 import com.javatechie.keycloak.domain.user.User;
+import com.javatechie.keycloak.domain.user.Username;
 import com.javatechie.keycloak.infrastructure.AbstractEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -22,6 +26,9 @@ public class File extends AbstractEntity<Long> {
 
     @ManyToOne
     private User creator;
+
+    @ManyToMany
+    private List<Group> groups = new ArrayList<>();
 
     protected File() {
         //JPA
@@ -52,5 +59,19 @@ public class File extends AbstractEntity<Long> {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public void addGroup(Group group) {
+        this.groups.add(group);
+    }
+
+    public boolean groupsContainsUser(Username username) {
+        boolean valid = false;
+
+        for (Group cur : groups) {
+            valid = cur.containsUser(username);
+        }
+
+        return valid;
     }
 }

@@ -1,6 +1,7 @@
 package com.javatechie.keycloak.domain.group;
 
 import com.javatechie.keycloak.domain.user.User;
+import com.javatechie.keycloak.domain.user.Username;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -19,7 +20,7 @@ public class Group {
     @OneToMany
     private List<User> participants = new ArrayList<>();
 
-    protected Group() {
+    public Group() {
         //JPA
     }
 
@@ -32,5 +33,18 @@ public class Group {
             participants.remove(user);
         }
 
+    }
+    public boolean containsUser(User user) {
+        return this.participants.contains(user);
+    }
+
+    public boolean containsUser(Username username) {
+        boolean valid = false;
+
+        for(int i = 0; i < participants.size() && !valid; i++) {
+            valid = participants.get(i).getUsername().getValue().equals(username.getValue());
+        }
+
+        return valid;
     }
 }
