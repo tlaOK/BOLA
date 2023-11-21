@@ -89,8 +89,6 @@ public class FileDataResource {
     @RolesAllowed({"admin", "user"})
     public ResponseEntity<File> updateFile(@PathVariable("id")long id, @RequestParam("content") String newContent) {
 
-        System.out.println("Hallo");
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
         Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
