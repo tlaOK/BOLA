@@ -45,7 +45,7 @@ public class FileDataResource {
             KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
             Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
 
-            return new ResponseEntity<>(fileDataService.findFileByCreatorName(currentUsername), HttpStatus.OK);
+            return new ResponseEntity<>(fileDataService.findFileByCreatorNameAndGroup(currentUsername), HttpStatus.OK);
         }
         else {
             return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
@@ -77,7 +77,11 @@ public class FileDataResource {
     @DeleteMapping("/{id}")
     @RolesAllowed({"admin", "user"})
     public ResponseEntity<?> deleteFile(@PathVariable("id")long id) {
-        fileDataService.deleteById(id);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        KeycloakPrincipal<?> keycloakPrincipal = (KeycloakPrincipal<?>) authentication.getPrincipal();
+        Username currentUsername = new Username(keycloakPrincipal.getKeycloakSecurityContext().getToken().getPreferredUsername());
+        fileDataService.deleteById(id, currentUsername);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
